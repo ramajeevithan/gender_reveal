@@ -1,14 +1,17 @@
 # Gender Reveal Voting App
 
-This is a web application for hosting an interactive gender reveal event where participants can vote on the baby's gender and the actual gender is revealed with an exciting countdown.
+This is a web application for hosting an interactive gender reveal event where participants can vote on the baby's gender and the actual gender is revealed with an exciting countdown and animation.
 
 ## Features
 
 - User voting page for participants to cast their votes
 - Admin control panel for managing the voting process
-- Real-time vote tracking
+- Dedicated statistics page for displaying live results
+- Real-time vote tracking with percentages
 - One vote per user restriction
-- Exciting countdown and reveal animation
+- Enhanced countdown with alternating boy/girl animation
+- 3D reveal animation with confetti effects
+- Gender-specific colors and heart emojis
 - Firebase integration for real-time data synchronization
 
 ## Setup Instructions
@@ -75,13 +78,32 @@ firebase deploy
 
 ## Usage
 
-1. Open the admin panel (admin.html) in your browser
+1. Open the admin panel (`admin.html`) in your browser
 2. Select the actual gender in the dropdown
 3. Click "Start Voting" to begin accepting votes
-4. Share the main page (index.html) with participants
-5. Monitor votes in real-time on the admin panel
-6. When ready, click "Stop Voting" to begin the countdown and reveal
-7. Use "Reset" to clear all votes and start over
+4. Share the main page (`index.html`) with participants
+5. Open the statistics page (`stats.html`) on a separate screen for live vote tracking
+6. Monitor votes in real-time with percentages
+7. When voting is complete, click "Stop Voting"
+8. Click "Start Reveal Countdown" when ready for the big reveal
+9. Watch the animated countdown and final gender reveal with confetti
+10. Use "Reset" to clear all votes and start over
+
+### Current Configuration
+
+The application is currently configured for the Firebase project 'oviyasbabyshower'. The configuration in `js/config.js` is:
+
+```javascript
+const firebaseConfig = {
+  apiKey: "AIzaSyBsaS3lw7sw2wZ2V8UyIpEoVL7Yt-_7ytI",
+  authDomain: "oviyasbabyshower.firebaseapp.com",
+  projectId: "oviyasbabyshower",
+  storageBucket: "oviyasbabyshower.firebasestorage.app",
+  databaseURL: "https://oviyasbabyshower-default-rtdb.firebaseio.com",
+  messagingSenderId: "325125072862",
+  appId: "1:325125072862:web:0ca394030298f13f379f4f",
+  measurementId: "G-VM3TKXQ1VZ"
+};
 
 ## Security Note
 
@@ -98,5 +120,8 @@ This demo uses Firebase Realtime Database in test mode. For production use, you 
 - JavaScript (jQuery)
 - jQuery UI
 - Bootstrap 5
+- GSAP (for 3D animations)
+- Canvas Confetti
+- Firebase Realtime Database
 - Firebase Realtime Database
 # gender_reveal

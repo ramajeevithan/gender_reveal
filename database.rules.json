@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "votes": {
+      ".read": true,
+      ".write": true
+    },
+    "status": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}

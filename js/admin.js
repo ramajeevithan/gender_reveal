@@ -1,10 +1,45 @@
 $(document).ready(function() {
+    const auth = firebase.auth();
     const db = firebase.database();
     const votesRef = db.ref('votes');
     const statusRef = db.ref('status');
 
     let boyVotes = 0;
     let girlVotes = 0;
+
+    // Check authentication state
+    auth.onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in
+            $('#loginSection').hide();
+            $('#adminControls').show();
+        } else {
+            // No user is signed in
+            $('#loginSection').show();
+            $('#adminControls').hide();
+        }
+    });
+
+    // Handle login form submission
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+        const email = $('#email').val();
+        const password = $('#password').val();
+
+        auth.signInWithEmailAndPassword(email, password)
+            .catch((error) => {
+                alert('Login failed: ' + error.message);
+            });
+    });
+
+    // Handle logout
+    $('#logoutBtn').click(function() {
+        auth.signOut().then(() => {
+            location.reload();
+        }).catch((error) => {
+            alert('Logout failed: ' + error.message);
+        });
+    });
 
     // Initialize controls
     $('#actualGender').change(function() {

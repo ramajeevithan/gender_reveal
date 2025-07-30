@@ -19,6 +19,25 @@
     transform: scale(1.05);
 }
 
+/* Hide countdown and reveal by default */
+#countdown, #reveal {
+    display: none !important;
+}
+
+/* Only show when explicitly visible */
+#countdown.visible, #reveal.visible {
+    display: block !important;
+}
+
+/* Ensure proper container visibility */
+.voting-container {
+    display: block;
+}
+
+.voting-container.hidden {
+    display: none !important;
+}
+
 .boy-btn {
     background-color: deepskyblue;
     color: white;

@@ -18,6 +18,26 @@
 
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <!-- Login Form -->
+                <div id="loginSection" class="card mb-4">
+                    <div class="card-body">
+                        <h3>Admin Login</h3>
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Admin Controls - Initially Hidden -->
+                <div id="adminControls" class="card" style="display: none;">
                 <div class="card">
                     <div class="card-body">
                         <div id="setupSection">
@@ -50,6 +70,9 @@
                             <h3>Statistics Page</h3>
                             <a href="stats.html" target="_blank" class="btn btn-info w-100">Open Statistics Page</a>
                         </div>
+                        <div class="mt-4">
+                            <button id="logoutBtn" class="btn btn-danger w-100">Logout</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,6 +84,7 @@
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="js/config.js"></script>
     <script src="js/admin.js"></script>
 </body>

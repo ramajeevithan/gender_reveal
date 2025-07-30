@@ -4,11 +4,20 @@ $(document).ready(function() {
     const statusRef = db.ref('status');
     let hasVoted = localStorage.getItem('hasVoted') === 'true';
 
+    // Set initial state
+    $('.voting-container').removeClass('hidden');
+    $('#countdown, #reveal').hide().removeClass('visible');
+
     // Listen for voting status changes
     statusRef.on('value', (snapshot) => {
         const status = snapshot.val();
         console.log('Received status:', status);
-        if (!status) return;
+        if (!status) {
+            // Default state when no status is available
+            $('.voting-container').removeClass('hidden');
+            $('#countdown, #reveal').hide().removeClass('visible');
+            return;
+        }
 
         const { isVotingOpen, isRevealing, actualGender } = status;
         console.log('Voting status:', { isVotingOpen, isRevealing, hasVoted });
@@ -26,6 +35,10 @@ $(document).ready(function() {
         if (isRevealing) {
             console.log('Starting countdown...');
             startCountdown(actualGender);
+        } else {
+            // Reset to default state if not revealing
+            $('.voting-container').removeClass('hidden');
+            $('#countdown, #reveal').hide().removeClass('visible');
         }
     });
 
@@ -66,9 +79,9 @@ $(document).ready(function() {
         const words = ['BOY', 'GIRL'];
         let count = 10;
         
-        $('.voting-container').hide();
+        $('.voting-container').addClass('hidden');
         $('#voteStatus').hide();
-        $('#countdown').show();
+        $('#countdown').addClass('visible');
 
         const countInterval = setInterval(() => {
             if (count > 0) {
@@ -126,14 +139,14 @@ $(document).ready(function() {
     }
 
     function revealGender(gender) {
-        $('#countdown').hide();
+        $('#countdown').removeClass('visible').hide();
         const isGirl = gender.toLowerCase() === 'girl';
         
         // Prepare reveal element with 3D transform
         $('#reveal').html(`<div class="reveal-3d">${gender.toUpperCase()}</div>`)
             .removeClass('boy-text girl-text')
             .addClass(gender.toLowerCase() === 'boy' ? 'boy-text' : 'girl-text')
-            .show();
+            .addClass('visible');
 
         // Animate the reveal with GSAP
         gsap.to('.reveal-3d', {

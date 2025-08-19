@@ -40,12 +40,49 @@ $(document).ready(function() {
 
         const { isRevealing, actualGender, isVotingOpen, votingUrl } = status;
         
-        // Handle voting URL display
-        if (votingUrl && isVotingOpen) {
+        // Handle voting URL and QR code display
+        if (votingUrl) {
             $('#votingUrlLink').text(votingUrl).attr('href', votingUrl);
             $('#votingUrlContainer').show();
+            
+            // Clear previous QR code
+            $('#qrcode').empty();
+            
+            try {
+                // Wait for QRCode to be defined
+                if (typeof QRCode !== 'undefined') {
+                    // Generate new QR code
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: votingUrl,
+                        width: 128,
+                        height: 128,
+                        colorDark: "#000000",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                } else {
+                    console.error('QRCode library not loaded yet. Retrying in 1 second...');
+                    // Retry after 1 second if library isn't loaded
+                    setTimeout(() => {
+                        if (typeof QRCode !== 'undefined') {
+                            new QRCode(document.getElementById("qrcode"), {
+                                text: votingUrl,
+                                width: 128,
+                                height: 128,
+                                colorDark: "#000000",
+                                colorLight: "#ffffff",
+                                correctLevel: QRCode.CorrectLevel.H
+                            });
+                        }
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error('Error generating QR code:', error);
+                $('#qrcode').html('<p class="text-danger">QR code generation failed. Please refresh the page.</p>');
+            }
         } else {
             $('#votingUrlContainer').hide();
+            $('#qrcode').empty();
         }
         if (isRevealing) {
             startCountdown(actualGender);
@@ -58,7 +95,7 @@ $(document).ready(function() {
     });
 
     function startCountdown(actualGender) {
-        const words = ['BABY BOY', 'BABY GIRL'];
+        const words = ["IT'S A PRINCE", "IT'S A PRINCESS"];
         let count = 10;
         $('.stats-container').hide();
         $('#countdown').show();
@@ -69,23 +106,24 @@ $(document).ready(function() {
                 // Show number and word together for context
                 const content = `
                     <div class="countdown-content">
-                        <span class="countdown-number" style="font-size:1.5em;display:block;">${count}</span>
-                        <span style="font-size:2em;" class="${word.includes('BOY') ? 'boy-text' : 'girl-text'}">${word}</span>
+                        <span class="countdown-number" style="font-size:1.5em;display:block;color:#666;">${count}</span>
+                        <span style="font-size:2em;" class="${word == "IT'S A PRINCE" ? 'boy-text' : 'girl-text'}">${word}</span>
                     </div>`;
                 $('#countdown').html(content);
-                // Animate the countdown
+                // Animate the countdown with longer duration
                 gsap.from('.countdown-content', {
-                    duration: 0.5,
+                    duration: 0.9,
                     rotationX: -180,
                     opacity: 0,
-                    ease: 'back.out'
+                    ease: 'elastic.out(1, 0.5)',
+                    yoyo: true
                 });
                 count--;
             } else {
                 clearInterval(countInterval);
                 revealGender(actualGender);
             }
-        }, 1000);
+        }, 2000);
     }
 
     function fireConfetti(color1, color2) {

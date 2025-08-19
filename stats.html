@@ -20,7 +20,7 @@
                         <div class="col-6">
                             <div class="card text-white" style="background-color: deepskyblue">
                                 <div class="card-body">
-                                    <h5 class="display-6">Baby Boy 🩵</h5>
+                                    <h5 class="display-6">Prince 🩵</h5>
                                     <h1 class="display-1" id="boyCount">0</h1>
                                     <h3 class="mt-2"><span id="boyPercentage">0</span>%</h3>
                                 </div>
@@ -29,7 +29,7 @@
                         <div class="col-6">
                             <div class="card text-white" style="background-color: #ff69b4;">
                                 <div class="card-body">
-                                    <h5 class="display-6">Baby Girl 🩷</h5>
+                                    <h5 class="display-6">Princess 🩷</h5>
                                     <h1 class="display-1" id="girlCount">0</h1>
                                     <h3 class="mt-2"><span id="girlPercentage">0</span>%</h3>
                                 </div>
@@ -39,9 +39,30 @@
                     <div class="text-center mt-4">
                         <h2 class="display-6">Total Votes: <span id="totalVotes">0</span></h2>
                     </div>
-                    <div id="votingUrlContainer" class="text-center mt-4 alert alert-info" style="display: none;">
-                        <h5>Cast your vote at:</h5>
-                        <a id="votingUrlLink" href="#" target="_blank" class="text-break"></a>
+                    <div id="votingUrlContainer" class="text-center mt-4" style="display: none;">
+                        <div class="qr-section">
+                            <div class="qr-wrapper">
+                                <div class="qr-border-animation"></div>
+                                <div class="qr-content">
+                                    <div class="qr-header">
+                                        <span class="boy-icon">👶</span>
+                                        <span class="girl-icon">👶</span>
+                                    </div>
+                                    <div id="qrcode" class="mt-2"></div>
+                                    <div class="qr-footer">
+                                        <h5>Scan to Vote!</h5>
+                                        <div class="url-display">
+                                            <a id="votingUrlLink" href="#" target="_blank" class="text-break"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="floating-hearts">
+                                <span>❤️</span>
+                                <span>💝</span>
+                                <span>💖</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="countdown" class="text-center mt-4 display-1" style="display: none !important;"></div>
@@ -54,8 +75,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/stats.js"></script>
 </body>

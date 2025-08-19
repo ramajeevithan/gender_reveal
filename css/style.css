@@ -77,6 +77,175 @@
     perspective: 1000px;
 }
 
+/* QR Code styling */
+.qr-section {
+    position: relative;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.qr-wrapper {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.qr-border-animation {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background: linear-gradient(45deg, 
+        rgba(0, 123, 255, 0.5),
+        rgba(255, 105, 180, 0.5),
+        rgba(0, 123, 255, 0.5),
+        rgba(255, 105, 180, 0.5));
+    z-index: -1;
+    animation: gradientBorder 8s linear infinite;
+}
+
+.qr-content {
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    z-index: 2;
+}
+
+.qr-header {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 15px;
+}
+
+.boy-icon, .girl-icon {
+    font-size: 2em;
+    animation: babyBounce 2s infinite alternate ease-in-out;
+}
+
+.boy-icon {
+    color: #007bff;
+    animation-delay: 0s;
+}
+
+.girl-icon {
+    color: #ff69b4;
+    animation-delay: 1s;
+}
+
+#qrcode {
+    display: inline-block;
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+#qrcode:hover {
+    transform: scale(1.05);
+}
+
+#qrcode img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.qr-footer {
+    margin-top: 15px;
+}
+
+.qr-footer h5 {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.url-display {
+    background: rgba(0,0,0,0.05);
+    padding: 10px;
+    border-radius: 8px;
+    word-break: break-all;
+}
+
+.url-display a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.url-display a:hover {
+    color: #333;
+}
+
+.floating-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.floating-hearts span {
+    position: absolute;
+    font-size: 20px;
+    animation: floatingHeart 4s linear infinite;
+    opacity: 0;
+}
+
+.floating-hearts span:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-hearts span:nth-child(2) {
+    left: 50%;
+    animation-delay: 2s;
+}
+
+.floating-hearts span:nth-child(3) {
+    left: 80%;
+    animation-delay: 3s;
+}
+
+@keyframes gradientBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes babyBounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+@keyframes floatingHeart {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
 .reveal-3d {
     position: relative;
     transform-style: preserve-3d;
@@ -85,11 +254,15 @@
 }
 
 .boy-text {
-    text-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+    color: #007bff;
+    text-shadow: 0 0 20px rgba(0, 123, 255, 0.5),
+                 0 0 40px rgba(0, 123, 255, 0.3);
 }
 
 .girl-text {
-    text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+    color: #ff69b4;
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.5),
+                 0 0 40px rgba(255, 105, 180, 0.3);
 }
 
 @keyframes float {

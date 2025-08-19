@@ -42,9 +42,51 @@ $(document).ready(function() {
     });
 
     // Initialize controls
-    $('#actualGender').change(function() {
-        const selectedGender = $(this).val();
+    function updateStartVotingButton() {
+        const selectedGender = $('#actualGender').val();
         $('#startVoting').prop('disabled', !selectedGender);
+    }
+
+    $('#actualGender').change(updateStartVotingButton);
+
+    // Handle URL setting
+    $('#setUrl').click(function() {
+        const url = $('#votingUrl').val().trim();
+        if (!url) {
+            alert('Please enter a valid URL');
+            return;
+        }
+        updateStatus(false, false); // This will update the URL in Firebase
+        updateUrlStatus(url, true);
+    });
+
+    // Update URL status display
+    function updateUrlStatus(url, isNew = false) {
+        $('#urlStatus').show();
+        $('#currentUrl').text(url || 'Not set');
+        $('#urlDisplayStatus').text(url ? 'Visible on stats page' : 'Not visible');
+        
+        if (isNew && url) {
+            // Show temporary success message
+            const originalText = $('#setUrl').text();
+            $('#setUrl').text('✓ Set!').prop('disabled', true);
+            setTimeout(() => {
+                $('#setUrl').text(originalText).prop('disabled', false);
+            }, 2000);
+        }
+    }
+
+    // Listen for status changes to update URL display
+    statusRef.on('value', (snapshot) => {
+        const status = snapshot.val() || {};
+        const currentUrl = status.votingUrl || '';
+        
+        // Update URL input if empty and URL exists in status
+        if (!$('#votingUrl').val() && currentUrl) {
+            $('#votingUrl').val(currentUrl);
+        }
+        
+        updateUrlStatus(currentUrl);
     });
 
     // Listen for vote changes
@@ -62,12 +104,12 @@ $(document).ready(function() {
 
     function updateStatus(isVotingOpen, isRevealing = false) {
         const actualGender = $('#actualGender').val();
-        const votingUrl = $('#votingUrl').val();
+        const votingUrl = $('#votingUrl').val().trim();
         const status = {
             isVotingOpen,
             isRevealing,
             actualGender,
-            votingUrl
+            votingUrl: votingUrl // Will be updated even when voting is not started
         };
         console.log('Updating status:', status);
         statusRef.set(status).then(() => {
@@ -78,19 +120,37 @@ $(document).ready(function() {
     }
 
     function resetVotes() {
+        // Reset votes count
         votesRef.set({
             boy: 0,
             girl: 0
         });
+        
+        // Clear all voter records
+        db.ref('voters').remove();
+        
+        // Reset status
         updateStatus(false, false);
+        
+        // Reset UI
         $('#actualGender').val('').prop('disabled', false);
         $('#startVoting').prop('disabled', true);
         $('#stopVoting').prop('disabled', true);
         $('#resetVoting').prop('disabled', true);
+        $('#revealGender').prop('disabled', false);
+        $('#revealSection').hide();
+        $('#votingUrl').val('');
+        updateUrlStatus(''); // Reset URL status display
     }
 
     // Event Listeners
     $('#startVoting').click(function() {
+        const selectedGender = $('#actualGender').val();
+        if (!selectedGender) {
+            alert('Please select a gender before starting the voting.');
+            return;
+        }
+        
         console.log('Start voting clicked');
         $(this).prop('disabled', true);
         $('#stopVoting').prop('disabled', false);
@@ -104,6 +164,7 @@ $(document).ready(function() {
         $(this).prop('disabled', true);
         $('#startVoting').prop('disabled', true);
         $('#revealSection').show();
+        $('#revealGender').prop('disabled', false); // Enable the reveal button
         updateStatus(false, false);
     });
 

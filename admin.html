@@ -52,8 +52,18 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Voting Page URL:</label>
-                                <input type="url" class="form-control" id="votingUrl" placeholder="https://your-voting-page.com">
+                                <div class="input-group">
+                                    <input type="url" class="form-control" id="votingUrl" placeholder="https://your-voting-page.com">
+                                    <button class="btn btn-primary" id="setUrl">Set URL</button>
+                                </div>
                                 <div class="form-text">Share this URL with your guests to let them vote</div>
+                                <div class="mt-2">
+                                    <div class="alert alert-info" id="urlStatus" style="display: none;">
+                                        <strong>Current URL:</strong> <span id="currentUrl">Not set</span>
+                                        <br>
+                                        <strong>Status:</strong> <span id="urlDisplayStatus">Not visible</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

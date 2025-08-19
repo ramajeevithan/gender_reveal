@@ -34,10 +34,19 @@ $(document).ready(function() {
             $('#countdown').removeClass('show');
             $('#reveal').removeClass('show');
             $('.stats-container').show();
+            $('#votingUrlContainer').hide();
             return;
         }
 
-        const { isRevealing, actualGender, isVotingOpen } = status;
+        const { isRevealing, actualGender, isVotingOpen, votingUrl } = status;
+        
+        // Handle voting URL display
+        if (votingUrl && isVotingOpen) {
+            $('#votingUrlLink').text(votingUrl).attr('href', votingUrl);
+            $('#votingUrlContainer').show();
+        } else {
+            $('#votingUrlContainer').hide();
+        }
         if (isRevealing) {
             startCountdown(actualGender);
         } else {
@@ -49,7 +58,7 @@ $(document).ready(function() {
     });
 
     function startCountdown(actualGender) {
-        const words = ['BOY', 'GIRL'];
+        const words = ['BABY BOY', 'BABY GIRL'];
         let count = 10;
         $('.stats-container').hide();
         $('#countdown').show();
@@ -61,20 +70,16 @@ $(document).ready(function() {
                 const content = `
                     <div class="countdown-content">
                         <span class="countdown-number" style="font-size:1.5em;display:block;">${count}</span>
-                        <span style="font-size:2em;">${word}</span>
+                        <span style="font-size:2em;" class="${word.includes('BOY') ? 'boy-text' : 'girl-text'}">${word}</span>
                     </div>`;
-                $('#countdown').html(content)
-                    .removeClass('boy-text girl-text')
-                    .addClass(word.toLowerCase() === 'boy' ? 'boy-text' : 'girl-text');
+                $('#countdown').html(content);
                 // Animate the countdown
-                if (window.gsap) {
-                    gsap.from('.countdown-content', {
-                        duration: 0.5,
-                        rotationX: -180,
-                        opacity: 0,
-                        ease: 'back.out'
-                    });
-                }
+                gsap.from('.countdown-content', {
+                    duration: 0.5,
+                    rotationX: -180,
+                    opacity: 0,
+                    ease: 'back.out'
+                });
                 count--;
             } else {
                 clearInterval(countInterval);
@@ -84,25 +89,25 @@ $(document).ready(function() {
     }
 
     function fireConfetti(color1, color2) {
-        const duration = 3000;
+        const duration = 6000; // Increased to 6 seconds
         const end = Date.now() + duration;
         (function frame() {
-            if (window.confetti) {
-                confetti({
-                    particleCount: 2,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0, y: 0.8 },
-                    colors: [color1]
-                });
-                confetti({
-                    particleCount: 2,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1, y: 0.8 },
-                    colors: [color2]
-                });
-            }
+            confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0, y: 0.8 },
+                colors: [color1],
+                scalar: 1.2
+            });
+            confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1, y: 0.8 },
+                colors: [color2],
+                scalar: 1.2
+            });
             if (Date.now() < end) {
                 requestAnimationFrame(frame);
             }
@@ -112,32 +117,40 @@ $(document).ready(function() {
     function revealGender(gender) {
         $('#countdown').hide();
         const isGirl = gender.toLowerCase() === 'girl';
-        $('#reveal').html(`<div class="reveal-3d">${gender.toUpperCase()}</div>`)
+        const emoji = isGirl ? '💝' : '🤴';
+        const revealText = isGirl ? "IT'S A PRINCESS!" : "IT'S A PRINCE!";
+        $('#reveal').html(`<div class="reveal-3d">${revealText}${emoji}</div>`)
             .removeClass('boy-text girl-text')
             .addClass(isGirl ? 'girl-text' : 'boy-text')
             .show();
+        // Fire confetti immediately
+        fireConfetti(
+            isGirl ? '#ff69b4' : '#007bff',
+            isGirl ? '#ff9ed7' : '#66b3ff'
+        );
+
         // Animate the reveal with GSAP
-        if (window.gsap) {
-            gsap.to('.reveal-3d', {
-                duration: 1.5,
-                rotationX: 0,
-                opacity: 1,
-                y: 0,
-                ease: 'elastic.out(1, 0.5)',
-                onComplete: () => {
-                    gsap.to('.reveal-3d', {
-                        duration: 2,
-                        y: -20,
-                        repeat: -1,
-                        yoyo: true,
-                        ease: 'power1.inOut'
-                    });
-                    fireConfetti(
-                        isGirl ? '#ff69b4' : '#007bff',
-                        isGirl ? '#ff9ed7' : '#66b3ff'
-                    );
-                }
-            });
-        }
+        gsap.set('.reveal-3d', {
+            rotationX: -90,
+            opacity: 0,
+            y: 50
+        });
+        
+        gsap.to('.reveal-3d', {
+            duration: 1.5,
+            rotationX: 0,
+            opacity: 1,
+            y: 0,
+            ease: 'elastic.out(1, 0.5)',
+            onComplete: () => {
+                gsap.to('.reveal-3d', {
+                    duration: 2,
+                    y: -20,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                });
+            }
+        });
     }
 });

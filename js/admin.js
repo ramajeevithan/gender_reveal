@@ -62,10 +62,12 @@ $(document).ready(function() {
 
     function updateStatus(isVotingOpen, isRevealing = false) {
         const actualGender = $('#actualGender').val();
+        const votingUrl = $('#votingUrl').val();
         const status = {
             isVotingOpen,
             isRevealing,
-            actualGender
+            actualGender,
+            votingUrl
         };
         console.log('Updating status:', status);
         statusRef.set(status).then(() => {

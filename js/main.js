@@ -39,6 +39,7 @@ $(document).ready(function() {
             // Reset to default state if not revealing
             $('.voting-container').removeClass('hidden');
             $('#countdown, #reveal').hide().removeClass('visible');
+            $('.display-4').fadeIn(); // Show the title again
         }
     });
 
@@ -76,25 +77,24 @@ $(document).ready(function() {
     }
 
     function startCountdown(actualGender) {
-        const words = ['BOY', 'GIRL'];
+        const words = ['BABY BOY', 'BABY GIRL'];
         let count = 10;
         
         $('.voting-container').addClass('hidden');
         $('#voteStatus').hide();
-        $('#countdown').addClass('visible');
+        $('.display-4').fadeOut(); // Hide the title
+        $('#countdown').removeClass('hidden').show();
 
         const countInterval = setInterval(() => {
             if (count > 0) {
                 const word = words[count % 2];
                 const content = `
                     <div class="countdown-content">
-                        <span class="countdown-number">${count}</span>
-                        ${word}
+                        <span class="countdown-number" style="font-size:1.5em;display:block;">${count}</span>
+                        <span style="font-size:2em;" class="${word.includes('BOY') ? 'boy-text' : 'girl-text'}">${word}</span>
                     </div>`;
                 
-                $('#countdown').html(content)
-                    .removeClass('boy-text girl-text')
-                    .addClass(word.toLowerCase() === 'boy' ? 'boy-text' : 'girl-text');
+                $('#countdown').html(content);
 
                 // Animate the countdown
                 gsap.from('.countdown-content', {
@@ -113,23 +113,25 @@ $(document).ready(function() {
     }
 
     function fireConfetti(color1, color2) {
-        const duration = 3000;
+        const duration = 6000; // Increased to 6 seconds
         const end = Date.now() + duration;
 
         (function frame() {
             confetti({
-                particleCount: 2,
+                particleCount: 3,
                 angle: 60,
                 spread: 55,
                 origin: { x: 0, y: 0.8 },
-                colors: [color1]
+                colors: [color1],
+                scalar: 1.2
             });
             confetti({
-                particleCount: 2,
+                particleCount: 3,
                 angle: 120,
                 spread: 55,
                 origin: { x: 1, y: 0.8 },
-                colors: [color2]
+                colors: [color2],
+                scalar: 1.2
             });
 
             if (Date.now() < end) {
@@ -139,14 +141,22 @@ $(document).ready(function() {
     }
 
     function revealGender(gender) {
-        $('#countdown').removeClass('visible').hide();
+        $('#countdown').hide();
         const isGirl = gender.toLowerCase() === 'girl';
+        const emoji = isGirl ? '💝' : '🤴';
+        const revealText = isGirl ? "IT'S A PRINCESS!" : "IT'S A PRINCE!";
         
         // Prepare reveal element with 3D transform
-        $('#reveal').html(`<div class="reveal-3d">${gender.toUpperCase()}</div>`)
+        $('#reveal').html(`<div class="reveal-3d">${revealText}${emoji}</div>`)
             .removeClass('boy-text girl-text')
-            .addClass(gender.toLowerCase() === 'boy' ? 'boy-text' : 'girl-text')
-            .addClass('visible');
+            .addClass(isGirl ? 'girl-text' : 'boy-text')
+            .show();
+
+        // Fire confetti immediately
+        fireConfetti(
+            isGirl ? '#ff69b4' : '#007bff',  // Primary color
+            isGirl ? '#ff9ed7' : '#66b3ff'   // Secondary color
+        );
 
         // Animate the reveal with GSAP
         gsap.to('.reveal-3d', {
@@ -164,12 +174,6 @@ $(document).ready(function() {
                     yoyo: true,
                     ease: 'power1.inOut'
                 });
-
-                // Fire confetti with gender-specific colors
-                fireConfetti(
-                    isGirl ? '#ff69b4' : '#007bff',  // Primary color
-                    isGirl ? '#ff9ed7' : '#66b3ff'   // Secondary color
-                );
             }
         });
     }

@@ -19,17 +19,21 @@
     transform: scale(1.05);
 }
 
-/* Hide countdown and reveal by default */
-#countdown, #reveal {
+/* Visibility control */
+.hidden {
     display: none !important;
 }
 
-/* Only show when explicitly visible */
+/* Countdown and reveal styling */
+#countdown, #reveal {
+    display: none;
+}
+
 #countdown.visible, #reveal.visible {
     display: block !important;
 }
 
-/* Ensure proper container visibility */
+/* Container visibility */
 .voting-container {
     display: block;
 }

@@ -19,8 +19,14 @@ $(document).ready(function() {
             // No user is signed in. Sign them in anonymously.
             auth.signInAnonymously().catch(error => {
                 console.error("Anonymous sign-in failed:", error);
+                let errorMessage = 'Could not connect to voting service. ';
+                
+                if (error.code === 'auth/admin-restricted-operation') {
+                    errorMessage = 'Anonymous voting is temporarily disabled. Please try again in a few minutes or contact the administrator.';
+                }
+                
                 $('#voteStatus').removeClass().addClass('alert alert-danger')
-                    .text('Could not connect to voting service. Please refresh.').show();
+                    .html(errorMessage + '<br><small>If the problem persists, please refresh the page.</small>').show();
             });
         }
     });

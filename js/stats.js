@@ -54,8 +54,8 @@ $(document).ready(function() {
                     // Generate new QR code
                     new QRCode(document.getElementById("qrcode"), {
                         text: votingUrl,
-                        width: 128,
-                        height: 128,
+                        width: 192,
+                        height: 192,
                         colorDark: "#000000",
                         colorLight: "#ffffff",
                         correctLevel: QRCode.CorrectLevel.H
@@ -67,8 +67,8 @@ $(document).ready(function() {
                         if (typeof QRCode !== 'undefined') {
                             new QRCode(document.getElementById("qrcode"), {
                                 text: votingUrl,
-                                width: 128,
-                                height: 128,
+                                width: 192,
+                                height: 192,
                                 colorDark: "#000000",
                                 colorLight: "#ffffff",
                                 correctLevel: QRCode.CorrectLevel.H

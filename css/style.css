@@ -118,28 +118,6 @@
     z-index: 2;
 }
 
-.qr-header {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-bottom: 15px;
-}
-
-.boy-icon, .girl-icon {
-    font-size: 2em;
-    animation: babyBounce 2s infinite alternate ease-in-out;
-}
-
-.boy-icon {
-    color: #007bff;
-    animation-delay: 0s;
-}
-
-.girl-icon {
-    color: #ff69b4;
-    animation-delay: 1s;
-}
-
 #qrcode {
     display: inline-block;
     padding: 15px;

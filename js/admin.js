@@ -13,6 +13,10 @@ $(document).ready(function() {
             // User is signed in
             $('#loginSection').hide();
             $('#adminControls').show();
+            
+            // Initialize UI state for authenticated user
+            updateStartVotingButton();
+            $('#resetVoting').prop('disabled', false); // Enable reset button for authenticated users
         } else {
             // No user is signed in
             $('#loginSection').show();
@@ -141,14 +145,19 @@ $(document).ready(function() {
         // Clear all voter records
         db.ref('voters').remove();
         
-        // Reset status
-        updateStatus(false, false);
+        // Reset status (including clearing the URL)
+        statusRef.set({
+            isVotingOpen: false,
+            isRevealing: false,
+            actualGender: '',
+            votingUrl: '' // Clear the URL to hide it on stats page
+        });
         
         // Reset UI
         $('#actualGender').val('').prop('disabled', false);
         $('#startVoting').prop('disabled', true);
         $('#stopVoting').prop('disabled', true);
-        $('#resetVoting').prop('disabled', true);
+        $('#resetVoting').prop('disabled', false); // Keep reset button enabled
         $('#revealGender').prop('disabled', false);
         $('#revealSection').hide();
         $('#votingUrl').val('');

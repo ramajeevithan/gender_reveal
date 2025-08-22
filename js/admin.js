@@ -103,6 +103,12 @@ $(document).ready(function() {
     }
 
     function updateStatus(isVotingOpen, isRevealing = false) {
+        // Check if user is authenticated before updating
+        if (!auth.currentUser) {
+            console.log('User not authenticated, skipping status update');
+            return;
+        }
+        
         const actualGender = $('#actualGender').val();
         const votingUrl = $('#votingUrl').val().trim();
         const status = {
@@ -120,6 +126,12 @@ $(document).ready(function() {
     }
 
     function resetVotes() {
+        // Check if user is authenticated before resetting
+        if (!auth.currentUser) {
+            console.log('User not authenticated, skipping reset');
+            return;
+        }
+        
         // Reset votes count
         votesRef.set({
             boy: 0,
@@ -179,6 +191,6 @@ $(document).ready(function() {
         }
     });
 
-    // Initialize
-    resetVotes();
+    // Initialize UI on page load
+    updateStartVotingButton();
 });

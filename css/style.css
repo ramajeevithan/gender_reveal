@@ -1,3 +1,208 @@
+/* Responsive Design for Projectors and Mobile */
+/* Base responsive typography */
+html {
+    font-size: 16px;
+}
+
+/* Large screen optimizations (Projectors, TVs, Large displays) */
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
+    
+    .display-1 {
+        font-size: calc(4rem + 2vw) !important;
+    }
+    
+    .display-4 {
+        font-size: calc(2.5rem + 1.5vw) !important;
+    }
+    
+    .display-6 {
+        font-size: calc(1.8rem + 1vw) !important;
+    }
+    
+    /* Larger cards for better visibility on projector */
+    .card {
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+    
+    /* Enhanced QR code for large screens */
+    .qr-section {
+        max-width: 600px;
+        padding: 40px;
+    }
+    
+    .qr-wrapper {
+        padding: 40px;
+        border-radius: 25px;
+    }
+    
+    .qr-footer h5 {
+        font-size: 1.5em;
+    }
+}
+
+/* Extra large screens (Ultra-wide projectors, conference rooms) */
+@media (min-width: 1600px) {
+    html {
+        font-size: 20px;
+    }
+    
+    .container {
+        max-width: 1400px;
+    }
+    
+    .display-1 {
+        font-size: calc(5rem + 3vw) !important;
+    }
+    
+    #countdown {
+        font-size: calc(6em + 2vw);
+    }
+    
+    #reveal {
+        font-size: calc(6em + 2vw);
+    }
+}
+
+/* Medium screens (Tablets, small projectors) */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .display-1 {
+        font-size: calc(3.5rem + 1vw) !important;
+    }
+    
+    .qr-section {
+        max-width: 450px;
+    }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .display-1 {
+        font-size: calc(2.5rem + 4vw) !important;
+    }
+    
+    .display-4 {
+        font-size: calc(1.8rem + 3vw) !important;
+    }
+    
+    .display-6 {
+        font-size: calc(1.2rem + 2vw) !important;
+    }
+    
+    /* Mobile card adjustments */
+    .card {
+        margin-bottom: 15px;
+        padding: 1rem;
+    }
+    
+    /* Mobile QR code */
+    .qr-section {
+        padding: 15px;
+        margin: 15px auto;
+        max-width: 350px;
+    }
+    
+    .qr-wrapper {
+        padding: 20px;
+        border-radius: 15px;
+    }
+    
+    .qr-footer h5 {
+        font-size: 1em;
+    }
+    
+    .url-display {
+        font-size: 0.85em;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+    }
+    
+    /* Mobile countdown and reveal */
+    #countdown {
+        font-size: calc(3em + 3vw);
+        padding: 0 10px;
+    }
+    
+    #reveal {
+        font-size: calc(3em + 3vw);
+        padding: 0 10px;
+    }
+    
+    /* Adjust spacing for mobile */
+    .mt-4 {
+        margin-top: 1.5rem !important;
+    }
+    
+    .mt-5 {
+        margin-top: 2rem !important;
+    }
+}
+
+/* Ultra-small screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+    
+    .qr-section {
+        max-width: 300px;
+        padding: 10px;
+    }
+    
+    .url-display {
+        padding: 8px;
+        font-size: 0.8em;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 767px) and (orientation: landscape) {
+    #countdown {
+        font-size: calc(2.5em + 2vh);
+    }
+    
+    #reveal {
+        font-size: calc(2.5em + 2vh);
+    }
+    
+    .display-1 {
+        font-size: calc(2rem + 3vh) !important;
+    }
+}
+
+/* High DPI displays (Retina, 4K projectors) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .card {
+        box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    
+    .qr-wrapper {
+        box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    
+    .boy-text, .girl-text {
+        text-shadow: 0 0 30px rgba(0, 123, 255, 0.4),
+                     0 0 60px rgba(0, 123, 255, 0.2);
+    }
+    
+    .girl-text {
+        text-shadow: 0 0 30px rgba(255, 105, 180, 0.4),
+                     0 0 60px rgba(255, 105, 180, 0.2);
+    }
+}
+
 .vote-btn {
     width: 100%;
     height: 200px;

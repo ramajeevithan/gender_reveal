@@ -123,7 +123,7 @@ $(document).ready(function() {
                 clearInterval(countInterval);
                 revealGender(actualGender);
             }
-        }, 1000);
+        }, 1800);
     }
 
     function fireConfetti(color1, color2) {
